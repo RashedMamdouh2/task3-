@@ -3,7 +3,7 @@ import sys
 import numpy as np
 from PyQt5.QtWidgets import QApplication, QMainWindow,QFileDialog
 import ui  # This assumes the Ui_MainWindow class is in the `ui` module
-from newui import Ui_MainWindow  # This assumes the Ui_MainWindow class is in the `ui` module
+# from newui import Ui_MainWindow  # This assumes the Ui_MainWindow class is in the `ui` module
 from qt_material import apply_stylesheet
 import modes
 import MySignal#change the name later
@@ -12,14 +12,14 @@ import MySignal#change the name later
 available_frequencies = {
     'Uniform Mode': {1:[100, 1000],
                     2:[100, 1000],
-3:[100, 1000],
-4:[100, 1000],
-5:[100, 1000],
-6:[100, 1000],
-7:[100, 1000],
-8:[100, 1000],
-9:[100, 1000],
-10:[100, 1000]
+                    3:[100, 1000],
+                    4:[100, 1000],
+                    5:[100, 1000],
+                    6:[100, 1000],
+                    7:[100, 1000],
+                    8:[100, 1000],
+                    9:[100, 1000],
+                    10:[100, 1000]
                      },#max frequency /10
     'Music': {"Guitar": [40, 400],
               "Flute": [400, 800],
@@ -52,7 +52,7 @@ class MainWindow(QMainWindow, ui.Ui_MainWindow):
         self.playButton.clicked.connect(self.originalGraph.play_pause)
         self.resetButton.clicked.connect(self.originalGraph.rewind_signal)
         self.zoomInButton.clicked.connect(self.originalGraph.zoom_in)
-        self.zoomOutButton.clicked.connect(self.originalGraph.zoom_in)
+        self.zoomOutButton.clicked.connect(self.originalGraph.zoom_out)
 
     def save_signal(self):#save button
         self.current_signal=MySignal.Signal(mode=self.current_mode_name, file_path=self.signal_file_path)
@@ -60,16 +60,16 @@ class MainWindow(QMainWindow, ui.Ui_MainWindow):
         self.originalGraph.add_signal(signal=[self.current_signal.time_data,self.current_signal.amplitude_data])
         self.equalizedGraph.add_signal(signal=[self.equalized_signal.time_data,self.equalized_signal.amplitude_data])
         self.choose_mode()
-        # if self.current_mode_name=='Uniform Mode':
-        #     frequencies=self.current_mode_obj.compute_fft()[1]
-        #     max_freq=np.max(frequencies)
-        #     start,end=0,max_freq/10
-        #     for i in range (11):
-        #         available_frequencies["Uniform Mode"][i]=[start,end]
-        #         start+=max_freq/10
-        #         end+=max_freq/10
-        #     for i in range (11):
-        #         print(f"available_frequencies[uniform Mode][{i}] {available_frequencies['Uniform Mode'][i]}")
+        if self.current_mode_name=='Uniform Mode':
+            frequencies=self.current_mode_obj.compute_fft()[1]
+            max_freq=np.max(frequencies)
+            start,end=0,max_freq/10
+            for i in range (1, 11):
+                available_frequencies["Uniform Mode"][i]=[start,end]
+                start+=max_freq/10
+                end+=max_freq/10
+            for i in range (11):
+                print(f"available_frequencies[uniform Mode][{i}] {available_frequencies['Uniform Mode'][i]}")
 
 
 
