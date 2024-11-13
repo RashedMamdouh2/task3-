@@ -26,6 +26,12 @@ class Ui_MainWindow(object):
         self.gridLayout_2 = QtWidgets.QGridLayout()
         self.gridLayout_2.setObjectName("gridLayout_2")
 
+        self.gridLayout_au = QtWidgets.QGridLayout()
+        self.gridLayout_au.setObjectName("gridLayout_2")
+
+        self.gridLayout_in = QtWidgets.QGridLayout(self.centralwidget)
+        self.gridLayout_in.setObjectName("gridLayout_2")
+
         self.equalizedSpecrtugram = spectrogramPlot(self.centralwidget)
         self.equalizedSpecrtugram.setMaximumSize(QtCore.QSize(400, 400))
         self.equalizedSpecrtugram.setObjectName("equalizedSpecrtugram")
@@ -180,16 +186,25 @@ class Ui_MainWindow(object):
 
         self.gridLayout_8.addWidget(self.playButton, 1, 1, 1, 1)
         self.originalRadioButton = QtWidgets.QRadioButton(self.centralwidget)
-        self.originalRadioButton.setMaximumSize(QtCore.QSize(100, 20))
+        self.originalRadioButton.setMaximumSize(QtCore.QSize(120, 20))
         self.originalRadioButton.setObjectName("radioButton_2")
 
-        self.gridLayout_8.addWidget(self.originalRadioButton, 0, 0, 1, 1)
+        self.frequency_label = QtWidgets.QLabel(self.centralwidget)
+        self.frequency_label.setMaximumSize(QtCore.QSize(16777215, 150))
+        self.frequency_label.setObjectName("slider_1_label")
+
+        self.gridLayout_au.addWidget(self.originalRadioButton, 9, 9, 8, 7)
         self.equalizedRadioButton = QtWidgets.QRadioButton(self.centralwidget)
-        self.equalizedRadioButton.setMaximumSize(QtCore.QSize(100, 20))
+        self.equalizedRadioButton.setMaximumSize(QtCore.QSize(120, 20))
         self.equalizedRadioButton.setObjectName("radioButton")
 
-        self.gridLayout_8.addWidget(self.equalizedRadioButton, 1, 0, 1, 1)
+        self.gridLayout_au.addWidget(self.frequency_label, 5, 9,7, 7)
+
+        self.gridLayout_au.addWidget(self.equalizedRadioButton, 12, 9,10, 7)
+        # self.gridLayout_in.addLayout(self.gridLayout_au, 10,5,7,8)
+        self.gridLayout_12.addLayout(self.gridLayout_au, 5, 0, 1, 1)
         self.gridLayout_12.addLayout(self.gridLayout_8, 3, 2, 1, 1)
+        # self.gridLayout_12.addLayout(self.gridLayout_au, 3, 2, 1, 1)
         self.gridLayout_7 = QtWidgets.QGridLayout()
         self.gridLayout_7.setObjectName("gridLayout_7")
         self.slider_3 = QtWidgets.QSlider(self.centralwidget)
@@ -338,7 +353,7 @@ class Ui_MainWindow(object):
         self.equalizedSpectrugramLabel.setText(_translate("MainWindow", "Equalized Spectrugram"))
         self.modeComboBox.setItemText(0, _translate("MainWindow", "Uniform Mode"))
         self.modeComboBox.setItemText(1, _translate("MainWindow", "Music"))
-        self.modeComboBox.setItemText(2, _translate("MainWindow", "Animal Sound"))
+        self.modeComboBox.setItemText(2, _translate("MainWindow", "Animal Sounds"))
         self.modeComboBox.setItemText(3, _translate("MainWindow", "ECG Abnormalities"))
         self.selectModeLabel.setText(_translate("MainWindow", "Select Mode"))
         self.spectrugramCheckBox.setText(_translate("MainWindow", "Spectrugram"))
@@ -352,8 +367,10 @@ class Ui_MainWindow(object):
         self.zoomOutButton.setText(_translate("MainWindow", "Zoom Out"))
         self.playButton.setText(_translate("MainWindow", "Play"))
 
-        self.originalRadioButton.setText(_translate("MainWindow", "Original"))
-        self.equalizedRadioButton.setText(_translate("MainWindow", "Equalized"))
+        self.originalRadioButton.setText(_translate("MainWindow", "Linear Scale"))
+        self.equalizedRadioButton.setText(_translate("MainWindow", "Audiogram"))
+
+        self.frequency_label.setText(_translate("MainWindow", "Frequency Scale:"))
 
         self.slider_1_label.setText(_translate("MainWindow", "1"))
         self.slider_2_label.setText(_translate("MainWindow", "2"))
