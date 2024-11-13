@@ -130,16 +130,11 @@ class Graph():
     def remove_old_curve(self):
         self.curve= self.plot_widget.removeItem(self.curve)
 
-    def speed_signal(self, speed_button):
-        if self.current_index_increment == 10:
-            self.current_index_increment = 20
-            speed_button.setText("2X")
-        elif self.current_index_increment == 20:
-            self.current_index_increment = 40
-            speed_button.setText("4X")
-        elif self.current_index_increment == 40:
-            self.current_index_increment = 80
-            speed_button.setText("8X")
-        else:
-            self.current_index_increment = 10
-            speed_button.setText("1X")
+    def speed_up_signal(self, speed_button):
+        if Graph.current_index_increment <= 80:
+            Graph.current_index_increment += 5
+    
+    def speed_down_signal(self, speed_button):
+        if Graph.current_index_increment >= 10:
+            Graph.current_index_increment -= 5
+
