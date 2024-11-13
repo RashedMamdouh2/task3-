@@ -41,8 +41,9 @@ class Signal:
 
             signal_data, self.sampling_rate = librosa.load(self.file_path)
             self.duration = librosa.get_duration(y=signal_data, sr=self.sampling_rate)
-            self.time_data = np.linspace(0, self.duration, len(signal_data))
-            self.amplitude_data = signal_data[1]
+            # self.time_data = np.linspace(0, self.duration, len(signal_data))
+            self.time_data = np.linspace(0, len(signal_data) / self.sampling_rate, num=len(signal_data))
+            self.amplitude_data = signal_data
 
         elif self.mode == 'ECG Abnormalities':
             signal_data = pd.read_csv(self.file_path)

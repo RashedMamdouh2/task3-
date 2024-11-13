@@ -371,7 +371,6 @@ class Ui_MainWindow(object):
         self.equalizedRadioButton.setText(_translate("MainWindow", "Audiogram"))
 
         self.frequency_label.setText(_translate("MainWindow", "Frequency Scale:"))
-
         self.slider_1_label.setText(_translate("MainWindow", "1"))
         self.slider_2_label.setText(_translate("MainWindow", "2"))
         self.slider_3_label.setText(_translate("MainWindow", "3"))

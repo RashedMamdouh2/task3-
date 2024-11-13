@@ -39,7 +39,7 @@ class MainWindow(QMainWindow, ui.Ui_MainWindow):
         super().__init__()
         self.setupUi(self)
         self.modeComboBox.currentIndexChanged.connect(self.choose_mode)
-        self.current_mode_name = 'ECG Abnormalities'#default
+        self.current_mode_name = 'Uniform Mode'#default
         self.current_mode_obj = None
         self.signal_file_path=''
         self.sliders_layout=None
@@ -55,36 +55,34 @@ class MainWindow(QMainWindow, ui.Ui_MainWindow):
         self.zoomOutButton.clicked.connect(self.originalGraph.zoom_out)
         self.speedUpButton.clicked.connect(self.originalGraph.speed_up_signal)
         self.speedDownButton.clicked.connect(self.originalGraph.speed_down_signal)
+        self.originalGraph.plot_widget.setXLink(self.equalizedGraph.plot_widget)
+        self.originalGraph.plot_widget.setYLink(self.equalizedGraph.plot_widget)
 
     def save_signal(self):#save button
-        self.current_signal=MySignal.Signal(mode=self.current_mode_name, file_path=self.signal_file_path)
-        self.equalized_signal=self.current_signal
-        self.originalGraph.add_signal(signal=[self.current_signal.time_data,self.current_signal.amplitude_data])
-        self.equalizedGraph.add_signal(signal=[self.equalized_signal.time_data,self.equalized_signal.amplitude_data])
-        self.choose_mode()
-        if self.current_mode_name=='Uniform Mode':
-            frequencies=self.current_mode_obj.compute_fft()[1]
-            max_freq=np.max(frequencies)
-            start,end=0,max_freq/10
-            for i in range (1, 11):
-                available_frequencies["Uniform Mode"][i]=[start,end]
-                start+=max_freq/10
-                end+=max_freq/10
-            for i in range (11):
-                print(f"available_frequencies[uniform Mode][{i}] {available_frequencies['Uniform Mode'][i]}")
-
-
-
-
-
-
-
+        pass
 
     def get_file_path(self):#load button
         file_path, _ = QFileDialog.getOpenFileName(self, "Select File", "", "All Files (*);;Text Files (*.txt)")
 
         if file_path:
             self.signal_file_path=file_path
+            self.current_signal=MySignal.Signal(mode=self.current_mode_name, file_path=self.signal_file_path)
+            self.equalized_signal=self.current_signal
+            self.originalGraph.add_signal(signal=np.array([self.current_signal.time_data,self.current_signal.amplitude_data]))
+            self.equalizedGraph.add_signal(signal=np.array([self.equalized_signal.time_data,self.equalized_signal.amplitude_data]))
+            self.choose_mode()
+            if self.current_mode_name=='Uniform Mode':
+                frequencies=self.current_mode_obj.compute_fft()[1]
+                max_freq=np.max(frequencies)
+                start,end=0,max_freq/10
+                for i in range (1, 11):
+                    available_frequencies["Uniform Mode"][i]=[start,end]
+                    start+=max_freq/10
+                    end+=max_freq/10
+                # for i in range (11):
+                #     # print(f"available_frequencies[uniform Mode][{i}] {available_frequencies['Uniform Mode'][i]}")
+
+
 
 
 

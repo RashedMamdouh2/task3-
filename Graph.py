@@ -108,7 +108,7 @@ class Graph():
 
     def set_plot_limits(self):
         """Set the plot limits based on the loaded data."""
-        if self.signal:
+        if len(self.signal[0])>0:
             x_max = self.signal[0][-1]
 
             y_min = min(self.signal[1])
