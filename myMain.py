@@ -69,7 +69,9 @@ class MainWindow(QMainWindow, ui.Ui_MainWindow):
             self.current_signal=MySignal.Signal(mode=self.current_mode_name, file_path=self.signal_file_path)
             self.equalized_signal=self.current_signal
             self.originalGraph.add_signal(signal=np.array([self.current_signal.time_data,self.current_signal.amplitude_data]))
+            self.current_mode_obj.plot_spectrogram(self.current_signal.amplitude_data, self.originalSpectrugram)
             self.equalizedGraph.add_signal(signal=np.array([self.equalized_signal.time_data,self.equalized_signal.amplitude_data]))
+            self.current_mode_obj.plot_spectrogram(self.equalized_signal.amplitude_data, self.equalizedSpecrtugram)
             self.choose_mode()
             if self.current_mode_name=='Uniform Mode':
                 frequencies=self.current_mode_obj.compute_fft()[1]
