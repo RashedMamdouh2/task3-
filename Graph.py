@@ -39,8 +39,8 @@ class Graph():
     def add_signal(self, signal,start=True, color=None):
         color = "b" if color is None else color
         self.signal = signal
-
         if start:
+            print("here")
             self.curve = self.plot_widget.plot(signal[0][:1], signal[1][:1], pen=color)
         else :
 
@@ -121,14 +121,17 @@ class Graph():
                 yMin=y_min, yMax=y_max + y_max * 0.05
             )
     def reconstruct_signal_on_equalized_plot(self,re_signal):
-        self.remove_old_curve()
-        self.signal[1]=re_signal
-        if Graph.current_index < len(self.signal[0]):
-            self.curve =self.plot_widget.plot(self.signal[0][:Graph.current_index],re_signal[:Graph.current_index],pen=(0, 0, 255))
+        # self.remove_old_curve()
+        # self.signal[1]=re_signal
+        new_time = np.linspace(0 , len(re_signal), 1000)
+        new_signal = np.array([new_time, re_signal])
+        if Graph.current_index < len(new_signal[0]):
+            self.curve =self.plot_widget.plot(new_signal[0][:Graph.current_index],re_signal[:Graph.current_index],pen=(0, 0, 255))
             self.set_plot_limits()
+            
 
     def remove_old_curve(self):
-        self.curve= self.plot_widget.removeItem(self.curve)
+        self.plot_widget.removeItem(self.curve)
 
     def speed_up_signal(self, speed_button):
         if Graph.current_index_increment <= 80:

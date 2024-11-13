@@ -76,6 +76,7 @@ class modes:
 
         self.reconstructed_signal = np.fft.ifft(modified_fft).real
         self.window.equalizedGraph.reconstruct_signal_on_equalized_plot(self.reconstructed_signal)
+        # self.window.equalizedGraph.add_signal(np.array([self.time, self.reconstructed_signal]))
 
         positive_freqs = frequencies[:len(frequencies) // 2]
         magnitude = np.abs(modified_fft)
