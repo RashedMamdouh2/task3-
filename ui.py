@@ -1,7 +1,16 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from qt_material import apply_stylesheet
 from Graph import Graph
+from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
+from matplotlib.figure import Figure
 
+class spectrogramPlot(FigureCanvas):
+    def __init__(self, parent=None, width=5, height=4, dpi=100):
+        fig = Figure(figsize=(width, height), dpi=dpi)
+        self.axes = fig.add_subplot(111)
+        self.no_label = True 
+        self.vmin, self.vmax= 0, 0
+        super().__init__(fig)
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -17,11 +26,11 @@ class Ui_MainWindow(object):
         self.gridLayout_2 = QtWidgets.QGridLayout()
         self.gridLayout_2.setObjectName("gridLayout_2")
 
-        self.equalizedSpecrtugram = Graph(self.centralwidget)
-        self.equalizedSpecrtugram.plot_widget.setMaximumSize(QtCore.QSize(400, 400))
-        self.equalizedSpecrtugram.plot_widget.setObjectName("equalizedSpecrtugram")
+        self.equalizedSpecrtugram = spectrogramPlot(self.centralwidget)
+        self.equalizedSpecrtugram.setMaximumSize(QtCore.QSize(400, 400))
+        self.equalizedSpecrtugram.setObjectName("equalizedSpecrtugram")
 
-        self.gridLayout_2.addWidget(self.equalizedSpecrtugram.plot_widget, 0, 0, 1, 1)
+        self.gridLayout_2.addWidget(self.equalizedSpecrtugram, 0, 0, 1, 1)
         self.gridLayout_12.addLayout(self.gridLayout_2, 5, 3, 2, 1)
         self.gridLayout_15 = QtWidgets.QGridLayout()
         self.gridLayout_15.setObjectName("gridLayout_15")
@@ -140,29 +149,29 @@ class Ui_MainWindow(object):
         self.gridLayout_8 = QtWidgets.QGridLayout()
         self.gridLayout_8.setObjectName("gridLayout_8")
 
-        self.pushButton_7 = QtWidgets.QPushButton(self.centralwidget)
-        self.pushButton_7.setMaximumSize(QtCore.QSize(60, 16777215))
-        self.pushButton_7.setObjectName("pushButton_7")
+        self.speedUpButton = QtWidgets.QPushButton(self.centralwidget)
+        self.speedUpButton.setMaximumSize(QtCore.QSize(60, 16777215))
+        self.speedUpButton.setObjectName("speedUpButton")
 
-        self.gridLayout_8.addWidget(self.pushButton_7, 1, 5, 1, 1)
-        self.pushButton_8 = QtWidgets.QPushButton(self.centralwidget)
-        self.pushButton_8.setMaximumSize(QtCore.QSize(60, 16777215))
-        self.pushButton_8.setObjectName("pushButton_8")
+        self.gridLayout_8.addWidget(self.speedUpButton, 1, 5, 1, 1)
+        self.speedDownButton = QtWidgets.QPushButton(self.centralwidget)
+        self.speedDownButton.setMaximumSize(QtCore.QSize(60, 16777215))
+        self.speedDownButton.setObjectName("speedDownButton")
 
-        self.gridLayout_8.addWidget(self.pushButton_8, 1, 6, 1, 1)
+        self.gridLayout_8.addWidget(self.speedDownButton, 1, 6, 1, 1)
         self.resetButton = QtWidgets.QPushButton(self.centralwidget)
         self.resetButton.setMaximumSize(QtCore.QSize(60, 16777215))
-        self.resetButton.setObjectName("pushButton_4")
+        self.resetButton.setObjectName("resetButton")
 
         self.gridLayout_8.addWidget(self.resetButton, 1, 2, 1, 1)
         self.zoomInButton = QtWidgets.QPushButton(self.centralwidget)
         self.zoomInButton.setMaximumSize(QtCore.QSize(60, 16777215))
-        self.zoomInButton.setObjectName("pushButton_5")
+        self.zoomInButton.setObjectName("zoonInButton")
 
         self.gridLayout_8.addWidget(self.zoomInButton, 1, 3, 1, 1)
         self.zoomOutButton = QtWidgets.QPushButton(self.centralwidget)
         self.zoomOutButton.setMaximumSize(QtCore.QSize(60, 16777215))
-        self.zoomOutButton.setObjectName("pushButton_6")
+        self.zoomOutButton.setObjectName("zoomOutButton")
 
         self.gridLayout_8.addWidget(self.zoomOutButton, 1, 4, 1, 1)
         self.playButton = QtWidgets.QPushButton(self.centralwidget)
@@ -304,11 +313,11 @@ class Ui_MainWindow(object):
         self.gridLayout = QtWidgets.QGridLayout()
         self.gridLayout.setObjectName("gridLayout")
 
-        self.originalSpectrugram = Graph(self.centralwidget)
-        self.originalSpectrugram.plot_widget.setMaximumSize(QtCore.QSize(400, 450))
-        self.originalSpectrugram.plot_widget.setObjectName("originalSpectrugram")
+        self.originalSpectrugram = spectrogramPlot(self.centralwidget)
+        self.originalSpectrugram.setMaximumSize(QtCore.QSize(400, 450))
+        self.originalSpectrugram.setObjectName("originalSpectrugram")
 
-        self.gridLayout.addWidget(self.originalSpectrugram.plot_widget, 0, 0, 1, 1)
+        self.gridLayout.addWidget(self.originalSpectrugram, 0, 0, 1, 1)
         self.gridLayout_12.addLayout(self.gridLayout, 1, 3, 3, 1)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
@@ -336,8 +345,8 @@ class Ui_MainWindow(object):
         self.equalizedFileLabel.setText(_translate("MainWindow", "Equalized File"))
         self.saveButton.setText(_translate("MainWindow", "Save"))
         self.loadButton.setText(_translate("MainWindow", "Load"))
-        self.pushButton_7.setText(_translate("MainWindow", "PushButton"))
-        self.pushButton_8.setText(_translate("MainWindow", "PushButton"))
+        self.speedUpButton.setText(_translate("MainWindow", "Speed Up"))
+        self.speedDownButton.setText(_translate("MainWindow", "Speed Down"))
         self.resetButton.setText(_translate("MainWindow", "Reset"))
         self.zoomInButton.setText(_translate("MainWindow", "Zoom In"))
         self.zoomOutButton.setText(_translate("MainWindow", "Zoom Out"))

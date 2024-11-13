@@ -53,6 +53,8 @@ class MainWindow(QMainWindow, ui.Ui_MainWindow):
         self.resetButton.clicked.connect(self.originalGraph.rewind_signal)
         self.zoomInButton.clicked.connect(self.originalGraph.zoom_in)
         self.zoomOutButton.clicked.connect(self.originalGraph.zoom_out)
+        self.speedUpButton.clicked.connect(self.originalGraph.speed_up_signal)
+        self.speedDownButton.clicked.connect(self.originalGraph.speed_down_signal)
 
     def save_signal(self):#save button
         self.current_signal=MySignal.Signal(mode=self.current_mode_name, file_path=self.signal_file_path)
