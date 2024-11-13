@@ -29,7 +29,7 @@ class modes:
             slider = QSlider(Qt.Vertical)
             slider.setMaximumSize(QtCore.QSize(16777215, 150))
             slider.setOrientation(QtCore.Qt.Vertical)
-            slider.setMinimum(0)
+            slider.setMinimum(1)
             slider.setMaximum(100)
             slider.setValue(50)
 
@@ -59,7 +59,7 @@ class modes:
 
 
     def apply_gain(self,slider_value,slider_idx):
-
+        slider_value = slider_value / 50
         fft_result, frequencies = self.compute_fft()
         modified_fft = fft_result.copy()
         # f_max = self.sampling_rate / 2
