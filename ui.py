@@ -310,12 +310,15 @@ class Ui_MainWindow(object):
         self.gridLayout_12.addLayout(self.gridLayout_14, 0, 3, 1, 1)
         self.gridLayout_18 = QtWidgets.QGridLayout()
         self.gridLayout_18.setObjectName("gridLayout_18")
-        
-        self.frequencyDomainPlot = spectrogramPlot(self.centralwidget)
-        self.frequencyDomainPlot.setMaximumSize(QtCore.QSize(550, 370))
-        self.frequencyDomainPlot.setObjectName("frequencyDomainPlot")
+        self.frequencyDomainPlot = Graph(self.centralwidget,is_frequency_domain=True)#edit on Github$#####################################################################################
+        # edit on Github$###############################################^#####################################
+        # edit on Github$###############################################|#####################################
+        # edit on Github$###############################################|#####################################
+        # edit on Github$###############################################|#####################################
+        self.frequencyDomainPlot.plot_widget.setMaximumSize(QtCore.QSize(550, 370))
+        self.frequencyDomainPlot.plot_widget.setObjectName("frequencyDomainPlot")
 
-        self.gridLayout_18.addWidget(self.frequencyDomainPlot, 2, 0, 1, 1)
+        self.gridLayout_18.addWidget(self.frequencyDomainPlot.plot_widget, 2, 0, 1, 1)
         self.frequencyDomainLabel = QtWidgets.QLabel(self.centralwidget)
         self.frequencyDomainLabel.setMaximumSize(QtCore.QSize(200, 50))
         self.frequencyDomainLabel.setObjectName("frequencyDomainLabel")
