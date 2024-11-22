@@ -86,7 +86,7 @@ class modes:
         self.window.frequencyDomainPlot.add_signal(signal=signal,start=False,color='r')#old ui
 
 
-                               # y        multiplot
+                             
     def plot_spectrogram(self, signal, canvas):
         """
         Plot spectrogram using Matplotlib.
@@ -99,7 +99,7 @@ class modes:
             canvas.vmin, canvas.vmax = np.min(Sxx_db), np.max(Sxx_db)
 
         canvas.axes.clear()
-        cax = canvas.axes.pcolormesh(t, f, 10 * np.log10(Sxx_db), shading='gouraud', cmap='plasma', vmin=canvas.vmin, vmax=canvas.vmax)
+        cax = canvas.axes.pcolormesh(t, f, Sxx_db, shading='gouraud', cmap='plasma', vmin=canvas.vmin, vmax=canvas.vmax)
         canvas.axes.set_xlabel("Time (s)")
         canvas.axes.set_ylabel("Frequency (Hz)")
         canvas.axes.set_title("Spectrogram")

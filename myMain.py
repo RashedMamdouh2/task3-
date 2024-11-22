@@ -1,3 +1,4 @@
+
 import sys
 
 import numpy as np
@@ -7,7 +8,7 @@ import ui  # This assumes the Ui_MainWindow class is in the `ui` module
 from qt_material import apply_stylesheet
 import modes
 import MySignal#change the name later
-
+from Audiogram import Audiogram
 
 available_frequencies = {
     'Uniform Mode': {1:[100, 1000],
@@ -38,6 +39,7 @@ class MainWindow(QMainWindow, ui.Ui_MainWindow):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
+        self.myaudiogram = Audiogram()
         self.modeComboBox.currentIndexChanged.connect(self.choose_mode)
         self.current_mode_name = 'Uniform Mode'#default
         self.current_mode_obj = None
@@ -52,37 +54,43 @@ class MainWindow(QMainWindow, ui.Ui_MainWindow):
         self.playButton.clicked.connect(self.originalGraph.play_pause)
         self.resetButton.clicked.connect(self.originalGraph.rewind_signal)
         self.zoomInButton.clicked.connect(self.originalGraph.zoom_in)
-        self.zoomOutButton.clicked.connect(self.originalGraph.zoom_out)
-        self.speedUpButton.clicked.connect(self.originalGraph.speed_up_signal)
-        self.speedDownButton.clicked.connect(self.originalGraph.speed_down_signal)
-        self.originalGraph.plot_widget.setXLink(self.equalizedGraph.plot_widget)
-        self.originalGraph.plot_widget.setYLink(self.equalizedGraph.plot_widget)
+        self.zoomOutButton.clicked.connect(self.originalGraph.zoom_in)
 
     def save_signal(self):#save button
-        pass
+        self.choose_mode()
+        self.current_signal=MySignal.Signal(mode=self.current_mode_name, file_path=self.signal_file_path)
+        self.equalized_signal=self.current_signal
+        self.originalGraph.add_signal(signal=np.array([self.current_signal.time_data,self.current_signal.amplitude_data]))
+        self.equalizedGraph.add_signal(signal=np.array([self.equalized_signal.time_data,self.equalized_signal.amplitude_data]))
+        if self.current_mode_obj is not None:
+             print("spect")
+             self.current_mode_obj.plot_spectrogram(self.current_signal.amplitude_data, self.originalSpectrugram)
+             self.current_mode_obj.plot_spectrogram(self.equalized_signal.amplitude_data, self.equalizedSpecrtugram)
+             self.myaudiogram.plotAudiogram(self.equalized_signal.amplitude_data, self.equalized_signal.sampling_rate,self.frequencyDomainPlot)
+        self.choose_mode()
+        if self.current_mode_name=='Uniform Mode':
+            frequencies=self.current_mode_obj.compute_fft()[1]
+            max_freq=np.max(frequencies)
+            start,end=0,max_freq/10
+            for i in range (1, 11):
+                available_frequencies["Uniform Mode"][i]=[start,end]
+                start+=max_freq/10
+                end+=max_freq/10
+            # for i in range (11):
+            #     print(f"available_frequencies[uniform Mode][{i}] {available_frequencies['Uniform Mode'][i]}")
+
+
+
+
+
+
+
 
     def get_file_path(self):#load button
         file_path, _ = QFileDialog.getOpenFileName(self, "Select File", "", "All Files (*);;Text Files (*.txt)")
 
         if file_path:
             self.signal_file_path=file_path
-            self.current_signal=MySignal.Signal(mode=self.current_mode_name, file_path=self.signal_file_path)
-            self.equalized_signal=self.current_signal
-            self.originalGraph.add_signal(signal=np.array([self.current_signal.time_data,self.current_signal.amplitude_data]))
-            self.equalizedGraph.add_signal(signal=np.array([self.equalized_signal.time_data,self.equalized_signal.amplitude_data]))
-            self.choose_mode()
-            if self.current_mode_name=='Uniform Mode':
-                frequencies=self.current_mode_obj.compute_fft()[1]
-                max_freq=np.max(frequencies)
-                start,end=0,max_freq/10
-                for i in range (1, 11):
-                    available_frequencies["Uniform Mode"][i]=[start,end]
-                    start+=max_freq/10
-                    end+=max_freq/10
-                # for i in range (11):
-                #     # print(f"available_frequencies[uniform Mode][{i}] {available_frequencies['Uniform Mode'][i]}")
-
-
 
 
 

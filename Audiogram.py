@@ -40,12 +40,12 @@ class Audiogram:
         return audiogram_frequencies, audiogram_dB
         
     def plotAudiogram(self, data, sampling_rate, canvas):
-        # # Step 1: Read the .w
+      
         # sampling_rate, data = wavfile.read('lion.wav')
-        # # convert to freq domain  
+       
         fourier_transform_magnitude , fourier_transform_freq = self.fourierTansformWave(audio=data , sampfreq=sampling_rate)
 
-        # # Get data for audiogram plot (approximation)
+     
         audiogram_frequencies, left_ear  = self.get_audiogram_data(fourier_transform_magnitude, fourier_transform_freq)
 
         refrance = [250, 500, 1000, 2000, 4000, 8000 ]
